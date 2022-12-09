@@ -5,45 +5,37 @@
         <link>https://staparx.github.io/blog/tags/</link>
         <description>Recent content in Tags on Staparx</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <lastBuildDate>Mon, 11 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://staparx.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>css</title>
-        <link>https://staparx.github.io/blog/tags/css/</link>
-        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+        <language>zh-CN</language>
+        <lastBuildDate>Fri, 09 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://staparx.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Blog</title>
+        <link>https://staparx.github.io/blog/tags/blog/</link>
+        <pubDate>Fri, 09 Dec 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://staparx.github.io/blog/tags/css/</guid>
+        <guid>https://staparx.github.io/blog/tags/blog/</guid>
         <description></description>
         </item>
         <item>
-        <title>html</title>
-        <link>https://staparx.github.io/blog/tags/html/</link>
-        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+        <title>Github</title>
+        <link>https://staparx.github.io/blog/tags/github/</link>
+        <pubDate>Fri, 09 Dec 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://staparx.github.io/blog/tags/html/</guid>
+        <guid>https://staparx.github.io/blog/tags/github/</guid>
         <description></description>
         </item>
         <item>
-        <title>markdown</title>
-        <link>https://staparx.github.io/blog/tags/markdown/</link>
-        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+        <title>Hugo</title>
+        <link>https://staparx.github.io/blog/tags/hugo/</link>
+        <pubDate>Fri, 09 Dec 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://staparx.github.io/blog/tags/markdown/</guid>
+        <guid>https://staparx.github.io/blog/tags/hugo/</guid>
         <description></description>
         </item>
         <item>
-        <title>themes</title>
-        <link>https://staparx.github.io/blog/tags/themes/</link>
-        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+        <title>hugo-theme-stack</title>
+        <link>https://staparx.github.io/blog/tags/hugo-theme-stack/</link>
+        <pubDate>Fri, 09 Dec 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://staparx.github.io/blog/tags/themes/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>emoji</title>
-        <link>https://staparx.github.io/blog/tags/emoji/</link>
-        <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
-        
-        <guid>https://staparx.github.io/blog/tags/emoji/</guid>
+        <guid>https://staparx.github.io/blog/tags/hugo-theme-stack/</guid>
         <description></description>
         </item>
         

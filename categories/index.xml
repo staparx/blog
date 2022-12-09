@@ -5,37 +5,13 @@
         <link>https://staparx.github.io/blog/categories/</link>
         <description>Recent content in Categories on Staparx</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <lastBuildDate>Wed, 09 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://staparx.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Test</title>
-        <link>https://staparx.github.io/blog/categories/test/</link>
-        <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
+        <language>zh-CN</language>
+        <lastBuildDate>Fri, 09 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://staparx.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>博客搭建</title>
+        <link>https://staparx.github.io/blog/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
+        <pubDate>Fri, 09 Dec 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://staparx.github.io/blog/categories/test/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>测试</title>
-        <link>https://staparx.github.io/blog/categories/%E6%B5%8B%E8%AF%95/</link>
-        <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
-        
-        <guid>https://staparx.github.io/blog/categories/%E6%B5%8B%E8%AF%95/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>syntax</title>
-        <link>https://staparx.github.io/blog/categories/syntax/</link>
-        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
-        
-        <guid>https://staparx.github.io/blog/categories/syntax/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>themes</title>
-        <link>https://staparx.github.io/blog/categories/themes/</link>
-        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
-        
-        <guid>https://staparx.github.io/blog/categories/themes/</guid>
+        <guid>https://staparx.github.io/blog/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</guid>
         <description></description>
         </item>
         
