@@ -1,4 +1,4 @@
-baseurl: https://staparx.github.io/blog/
+baseurl: https://blog.staparx.cn/
 languageCode: zh-CN
 theme: hugo-theme-stack
 paginate: 5
