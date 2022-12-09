@@ -1,11 +1,3 @@
----
-title: 关于
-menu:
-    main: 
-        weight: -90
-        params:
-            icon: user
----
 
 # Staparx👨🏻‍🔧
 一位平平无奇的Gopher，目前在深圳从事Golang开发工作。

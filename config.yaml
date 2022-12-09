@@ -1,8 +1,8 @@
 baseurl: https://staparx.github.io/blog/
-languageCode: en-us
+languageCode: zh-CN
 theme: hugo-theme-stack
 paginate: 5
-title: Example Site
+title: Staparx Blog
 
 languages:
     zh-cn:
@@ -31,7 +31,7 @@ permalinks:
 
 params:
     mainSections:
-        - post
+        - post #设置网站首页要展示的Section，一般设成post。这样就会默认展示post文件夹里面的内容。
     featuredImageField: image
     rssFullContent: true
     favicon:  /favicon.ico # e.g.: favicon placed in `static/favicon.ico` of your site folder, then set this field to `/favicon.ico` (`/` is necessary)
@@ -44,12 +44,11 @@ params:
         published: Jan 02, 2006
         lastUpdated: Jan 02, 2006 15:04 MST
 
-    sidebar:
+    sidebar: #左边栏
         emoji: ✨
-        subtitle: |+
-            Gopher           
-            |
-            Gamer
+        subtitle:
+            Just a gopher
+
         avatar:
             enabled: true
             local: true
@@ -60,7 +59,7 @@ params:
         toc: true
         readingTime: true
         license:
-            enabled: true
+            enabled: false
             default: Licensed under CC BY-NC-SA 4.0
 
     comments:
@@ -186,7 +185,46 @@ params:
 ### See https://docs.stack.jimmycai.com/configuration/custom-menu.html
 ### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
 menu:
-    main: []
+    main:
+        - identifier: home
+          name: 首页
+          url: /
+          weight: -100 #权重
+          params:
+              ### For demonstration purpose, the home link will be open in a new tab
+              newTab: false
+              icon: home #更多的图标信息见后
+
+        - identifier: archives
+          name: 文章
+          url: /archives
+          weight: -50 #权重
+          params:
+              ### For demonstration purpose, the home link will be open in a new tab
+              newTab: false
+              icon: archives
+
+        - identifier: search
+          name: 搜索
+          url: /search
+          weight: 99 #权重
+          params:
+              ### For demonstration purpose, the home link will be open in a new tab
+              newTab: false
+              icon: search
+
+        - identifier: about
+          name: 关于
+          url: /about
+          weight: 100 #权重
+          params:
+              ### For demonstration purpose, the home link will be open in a new tab
+              newTab: false
+              icon: user
+
+
+
+
 
     social:
         - identifier: github
