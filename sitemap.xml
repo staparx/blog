@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://staparx.github.io/blog/tags/blog/</loc>
+    <loc>https://blog.staparx.cn/tags/blog/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/categories/</loc>
+    <loc>https://blog.staparx.cn/categories/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/tags/github/</loc>
+    <loc>https://blog.staparx.cn/tags/github/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/tags/hugo/</loc>
+    <loc>https://blog.staparx.cn/tags/hugo/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/tags/hugo-theme-stack/</loc>
+    <loc>https://blog.staparx.cn/tags/hugo-theme-stack/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/post/</loc>
+    <loc>https://blog.staparx.cn/post/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/</loc>
+    <loc>https://blog.staparx.cn/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/tags/</loc>
+    <loc>https://blog.staparx.cn/tags/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</loc>
+    <loc>https://blog.staparx.cn/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/p/%E5%9F%BA%E4%BA%8Ehugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2stack%E4%B8%BB%E9%A2%98--githubpages%E6%8C%81%E7%BB%AD%E5%8C%96%E9%83%A8%E7%BD%B2/</loc>
+    <loc>https://blog.staparx.cn/p/%E5%9F%BA%E4%BA%8Ehugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2stack%E4%B8%BB%E9%A2%98--githubpages%E6%8C%81%E7%BB%AD%E5%8C%96%E9%83%A8%E7%BD%B2/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/archives/</loc>
+    <loc>https://blog.staparx.cn/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://staparx.github.io/blog/about/</loc>
+    <loc>https://blog.staparx.cn/about/</loc>
     <priority>0</priority>
   </url><url>
-    <loc>https://staparx.github.io/blog/search/</loc>
+    <loc>https://blog.staparx.cn/search/</loc>
   </url>
 </urlset>

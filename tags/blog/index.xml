@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Blog on Staparx</title>
-        <link>https://staparx.github.io/blog/tags/blog/</link>
+        <link>https://blog.staparx.cn/tags/blog/</link>
         <description>Recent content in Blog on Staparx</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-CN</language>
-        <lastBuildDate>Fri, 09 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://staparx.github.io/blog/tags/blog/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 09 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.staparx.cn/tags/blog/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>基于Hugo搭建个人博客（Stack主题 &#43; GithubPages持续化部署）</title>
-        <link>https://staparx.github.io/blog/p/%E5%9F%BA%E4%BA%8Ehugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2stack%E4%B8%BB%E9%A2%98--githubpages%E6%8C%81%E7%BB%AD%E5%8C%96%E9%83%A8%E7%BD%B2/</link>
+        <link>https://blog.staparx.cn/p/%E5%9F%BA%E4%BA%8Ehugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2stack%E4%B8%BB%E9%A2%98--githubpages%E6%8C%81%E7%BB%AD%E5%8C%96%E9%83%A8%E7%BD%B2/</link>
         <pubDate>Fri, 09 Dec 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://staparx.github.io/blog/p/%E5%9F%BA%E4%BA%8Ehugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2stack%E4%B8%BB%E9%A2%98--githubpages%E6%8C%81%E7%BB%AD%E5%8C%96%E9%83%A8%E7%BD%B2/</guid>
-        <description>&lt;img src="https://staparx.github.io/blog/p/%E5%9F%BA%E4%BA%8Ehugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2stack%E4%B8%BB%E9%A2%98--githubpages%E6%8C%81%E7%BB%AD%E5%8C%96%E9%83%A8%E7%BD%B2/pawel-czerwinski-8uZPynIu-rQ-unsplash.jpg" alt="Featured image of post 基于Hugo搭建个人博客（Stack主题 &#43; GithubPages持续化部署）" /&gt;&lt;p&gt;先别急 空再见👋～&lt;/p&gt;
+        <guid>https://blog.staparx.cn/p/%E5%9F%BA%E4%BA%8Ehugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2stack%E4%B8%BB%E9%A2%98--githubpages%E6%8C%81%E7%BB%AD%E5%8C%96%E9%83%A8%E7%BD%B2/</guid>
+        <description>&lt;img src="https://blog.staparx.cn/p/%E5%9F%BA%E4%BA%8Ehugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2stack%E4%B8%BB%E9%A2%98--githubpages%E6%8C%81%E7%BB%AD%E5%8C%96%E9%83%A8%E7%BD%B2/pawel-czerwinski-8uZPynIu-rQ-unsplash.jpg" alt="Featured image of post 基于Hugo搭建个人博客（Stack主题 &#43; GithubPages持续化部署）" /&gt;&lt;p&gt;先别急 空再见👋～&lt;/p&gt;
 </description>
         </item>
         
