@@ -40,4 +40,5 @@ jobs:
         with:
             PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
             PUBLISH_DIR: ./public
+            cname: blog.staparx.cn
             commit_message: ${{ github.event.head_commit.message }}
