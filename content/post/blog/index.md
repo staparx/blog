@@ -54,13 +54,13 @@ hugo env -v
 显示了hugo版本信息就算成功。
 
 ## 开始Hugo
-1.创建一个新的博客项目
+### 创建一个新的博客项目
 
 ```
 hugo new site blog
 ```
 
-2.添加一个主题
+### 添加一个主题
 
 可以自己选择一个喜欢的[Hugo - 主题](https://themes.gohugo.io/)，本站点使用的是[hugo-theme-stack](https://github.com/CaiJimmy/hugo-theme-stack)。
 ```
@@ -90,7 +90,7 @@ cp themes/hugo-theme-stack/archetypes ./archetypes
 
 ```
 
-3.使用主题自带的页面
+### 使用主题自带的页面
 
 想要初始化的时候有点页面，可以直接将主题文件内的 **themes/hugo-theme-stack/exampleSite/content** 里面的page和post页面，cp到主站点的content里面。
 
@@ -99,13 +99,13 @@ PS：重启hugo server后，可能会出现超时的问题，是因为部分页�
 > 
 > rich-content
 
-4.创建新的博客页面
+### 创建新的博客页面
 新博客页面统一放置在**content/post**路径下，使用new命令会根据**archetypes**内预先配置好的模版创建.md文件。
 ```
 hugo new posts/new/index.md
 ```
 
-5.本地启动服务
+### 本地启动服务
 ```
 hugo server -D
 ```
@@ -113,12 +113,10 @@ hugo server -D
 
 直接打开http://localhost:1313/，就可以看到通过主题初始化后的博客啦。
 
-6.构建静态页面
+### 构建静态页面
 ```
 hugo -D
 ```
 命令执行后，会在站点目录下生成一个 **./public** 文件，所有静态文件都打包在该目录下。
 
 后续部署会根据该文件进行静态文件部署～
-
-##
