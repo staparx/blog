@@ -206,7 +206,47 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#为何选择hugo">为何选择Hugo</a></li>
+    <li><a href="#安装hugo">安装Hugo</a>
+      <ol>
+        <li><a href="#有go环境">有go环境</a></li>
+        <li><a href="#没有go环境">没有go环境</a></li>
+        <li><a href="#检验安装">检验安装</a></li>
+      </ol>
+    </li>
+    <li><a href="#开始hugo">开始Hugo</a></li>
+    <li><a href="#heading"></a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="has-image main-article">
@@ -278,7 +318,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -293,7 +333,147 @@
     <section class="article-content">
     
     
-    <p>先别急 空再见👋～</p>
+    <h1 id="一基于hugo搭建个人博客">一、基于Hugo搭建个人博客</h1>
+<h2 id="为何选择hugo">为何选择Hugo</h2>
+<p>说白了，就是懒。</p>
+<p>作为一个后端开发，即想要一个稍微好看的博客网站，又不想在前端上下太大的功夫。</p>
+<p>而Hugo静态网站生成，充分满足了我们的需求。</p>
+<p>它不仅解决了Web端环境依赖的问题，并且使用简单、部署方便，支持 <strong>Markdown</strong> 的写作方式，通过 <strong>LiveReload</strong> 实时刷新，简直不要太舒服！</p>
+<h2 id="安装hugo">安装Hugo</h2>
+<h3 id="有go环境">有go环境</h3>
+<p><a class="link" href="https://github.com/gohugoio/hugo#install-hugo-as-your-site-generator-binary-install"  target="_blank" rel="noopener"
+    >Hugo安装官方文档</a></p>
+<p>根据文档，直接install下来就完事了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="k">go</span> <span class="nx">install</span> <span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">gohugoio</span><span class="o">/</span><span class="nx">hugo</span><span class="err">@</span><span class="nx">latest</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>相信你的环境变量应该指向了你的 <strong>$GOPATH/bin</strong>了，直接去检验安装吧。</p>
+<h3 id="没有go环境">没有go环境</h3>
+<p><a class="link" href="https://github.com/gohugoio/hugo/releases"  target="_blank" rel="noopener"
+    >Hugo - Releases</a></p>
+<p>根据自己的操作系统，去下载吧。最后别忘了设置环境变量哦～。</p>
+<h3 id="检验安装">检验安装</h3>
+<p>在命令行输入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo env -v
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>显示了hugo版本信息就算成功。</p>
+<h2 id="开始hugo">开始Hugo</h2>
+<p>1.创建一个新的博客项目</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo new site blog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2.添加一个主题</p>
+<p>可以自己选择一个喜欢的<a class="link" href="https://themes.gohugo.io/"  target="_blank" rel="noopener"
+    >Hugo - 主题</a>，本站点使用的是<a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack"  target="_blank" rel="noopener"
+    >hugo-theme-stack</a>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-v" data-lang="v"><span class="line"><span class="cl"><span class="c1">//进入项目空间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">cd</span> <span class="nv">blog</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//初始化git仓库
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">git</span> <span class="nv">init</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="c1">//将主题添加到主模块中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">git</span> <span class="nv">submodule</span> <span class="nv">add</span> <span class="nv">git</span><span class="p">:</span><span class="c1">//github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">//修改配置文件的主题设置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">echo</span> <span class="s1">&#39;theme = &#34;hugo-theme-stack&#34;&#39;</span> <span class="o">&gt;&gt;</span> <span class="nv">config</span><span class="p">.</span><span class="nv">toml</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 以下针对 **hugo-theme-stack**这个主题进行配置，若使用的其他主题，可忽略后面的命令。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 把themes/hugo-theme-stack/exampleSite 文件夹中的config.yaml 复制到站点目录下
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">cp</span> <span class="nv">themes</span><span class="o">/</span><span class="nv">hugo</span><span class="o">-</span><span class="nv">theme</span><span class="o">-</span><span class="nv">stack</span><span class="o">/</span><span class="nv">exampleSite</span><span class="o">/</span><span class="nv">config</span><span class="p">.</span><span class="nv">yaml</span> <span class="p">.</span><span class="o">/</span><span class="nv">config</span><span class="p">.</span><span class="nv">yaml</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//Hugo配置文件会读取config.toml或config.yaml，所以需要把初始化时生成的config.toml删除掉。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">rm</span> <span class="o">-</span><span class="nv">rf</span> <span class="nv">config</span><span class="p">.</span><span class="nv">toml</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 可以把博客模版\themes\hugo-theme-stack\archetypes 复制到 \archetypes中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">cp</span> <span class="nv">themes</span><span class="o">/</span><span class="nv">hugo</span><span class="o">-</span><span class="nv">theme</span><span class="o">-</span><span class="nv">stack</span><span class="o">/</span><span class="nv">archetypes</span> <span class="p">.</span><span class="o">/</span><span class="nv">archetypes</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>3.使用主题自带的页面</p>
+<p>想要初始化的时候有点页面，可以直接将主题文件内的 <strong>themes/hugo-theme-stack/exampleSite/content</strong> 里面的page和post页面，cp到主站点的content里面。</p>
+<p>PS：重启hugo server后，可能会出现超时的问题，是因为部分页面引用了外网链接，将<strong>content/post</strong>里面的这两个文件删除就可以正常跑起来了。</p>
+<blockquote>
+<p>placeholder-text</p>
+<p>rich-content</p>
+</blockquote>
+<p>4.创建新的博客页面
+新博客页面统一放置在<strong>content/post</strong>路径下，使用new命令会根据<strong>archetypes</strong>内预先配置好的模版创建.md文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo new posts/new/index.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>5.本地启动服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo server -D
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认端口为 <strong>:1313</strong></p>
+<p>直接打开http://localhost:1313/，就可以看到通过主题初始化后的博客啦。</p>
+<p>6.构建静态页面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo -D
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令执行后，会在站点目录下生成一个 <strong>./public</strong> 文件，所有静态文件都打包在该目录下。</p>
+<p>后续部署会根据该文件进行静态文件部署～</p>
+<h2 id="heading"></h2>
 
 </section>
 
