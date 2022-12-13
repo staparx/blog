@@ -48,7 +48,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;显示了hugo版本信息就算成功。&lt;/p&gt;
 &lt;h2 id=&#34;开始hugo&#34;&gt;开始Hugo&lt;/h2&gt;
-&lt;p&gt;1.创建一个新的博客项目&lt;/p&gt;
+&lt;h3 id=&#34;创建一个新的博客项目&#34;&gt;创建一个新的博客项目&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -57,7 +57,7 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo new site blog
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;2.添加一个主题&lt;/p&gt;
+&lt;/div&gt;&lt;h3 id=&#34;添加一个主题&#34;&gt;添加一个主题&lt;/h3&gt;
 &lt;p&gt;可以自己选择一个喜欢的&lt;a class=&#34;link&#34; href=&#34;https://themes.gohugo.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Hugo - 主题&lt;/a&gt;，本站点使用的是&lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;hugo-theme-stack&lt;/a&gt;。&lt;/p&gt;
@@ -113,15 +113,15 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;cp&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;themes&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;hugo&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;theme&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;stack&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;archetypes&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;archetypes&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;3.使用主题自带的页面&lt;/p&gt;
+&lt;/div&gt;&lt;h3 id=&#34;使用主题自带的页面&#34;&gt;使用主题自带的页面&lt;/h3&gt;
 &lt;p&gt;想要初始化的时候有点页面，可以直接将主题文件内的 &lt;strong&gt;themes/hugo-theme-stack/exampleSite/content&lt;/strong&gt; 里面的page和post页面，cp到主站点的content里面。&lt;/p&gt;
 &lt;p&gt;PS：重启hugo server后，可能会出现超时的问题，是因为部分页面引用了外网链接，将&lt;strong&gt;content/post&lt;/strong&gt;里面的这两个文件删除就可以正常跑起来了。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;placeholder-text&lt;/p&gt;
 &lt;p&gt;rich-content&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;4.创建新的博客页面
-新博客页面统一放置在&lt;strong&gt;content/post&lt;/strong&gt;路径下，使用new命令会根据&lt;strong&gt;archetypes&lt;/strong&gt;内预先配置好的模版创建.md文件。&lt;/p&gt;
+&lt;h3 id=&#34;创建新的博客页面&#34;&gt;创建新的博客页面&lt;/h3&gt;
+&lt;p&gt;新博客页面统一放置在&lt;strong&gt;content/post&lt;/strong&gt;路径下，使用new命令会根据&lt;strong&gt;archetypes&lt;/strong&gt;内预先配置好的模版创建.md文件。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -130,7 +130,7 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo new posts/new/index.md
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;5.本地启动服务&lt;/p&gt;
+&lt;/div&gt;&lt;h3 id=&#34;本地启动服务&#34;&gt;本地启动服务&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -141,7 +141,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;默认端口为 &lt;strong&gt;:1313&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;直接打开http://localhost:1313/，就可以看到通过主题初始化后的博客啦。&lt;/p&gt;
-&lt;p&gt;6.构建静态页面&lt;/p&gt;
+&lt;h3 id=&#34;构建静态页面&#34;&gt;构建静态页面&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -152,7 +152,6 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;命令执行后，会在站点目录下生成一个 &lt;strong&gt;./public&lt;/strong&gt; 文件，所有静态文件都打包在该目录下。&lt;/p&gt;
 &lt;p&gt;后续部署会根据该文件进行静态文件部署～&lt;/p&gt;
-&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 </description>
         </item>
         <item>

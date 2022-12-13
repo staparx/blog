@@ -236,8 +236,16 @@
         <li><a href="#检验安装">检验安装</a></li>
       </ol>
     </li>
-    <li><a href="#开始hugo">开始Hugo</a></li>
-    <li><a href="#heading"></a></li>
+    <li><a href="#开始hugo">开始Hugo</a>
+      <ol>
+        <li><a href="#创建一个新的博客项目">创建一个新的博客项目</a></li>
+        <li><a href="#添加一个主题">添加一个主题</a></li>
+        <li><a href="#使用主题自带的页面">使用主题自带的页面</a></li>
+        <li><a href="#创建新的博客页面">创建新的博客页面</a></li>
+        <li><a href="#本地启动服务">本地启动服务</a></li>
+        <li><a href="#构建静态页面">构建静态页面</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -369,7 +377,7 @@
 </div>
 </div><p>显示了hugo版本信息就算成功。</p>
 <h2 id="开始hugo">开始Hugo</h2>
-<p>1.创建一个新的博客项目</p>
+<h3 id="创建一个新的博客项目">创建一个新的博客项目</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -378,7 +386,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo new site blog
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>2.添加一个主题</p>
+</div><h3 id="添加一个主题">添加一个主题</h3>
 <p>可以自己选择一个喜欢的<a class="link" href="https://themes.gohugo.io/"  target="_blank" rel="noopener"
     >Hugo - 主题</a>，本站点使用的是<a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack"  target="_blank" rel="noopener"
     >hugo-theme-stack</a>。</p>
@@ -434,15 +442,15 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">cp</span> <span class="nv">themes</span><span class="o">/</span><span class="nv">hugo</span><span class="o">-</span><span class="nv">theme</span><span class="o">-</span><span class="nv">stack</span><span class="o">/</span><span class="nv">archetypes</span> <span class="p">.</span><span class="o">/</span><span class="nv">archetypes</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>3.使用主题自带的页面</p>
+</div><h3 id="使用主题自带的页面">使用主题自带的页面</h3>
 <p>想要初始化的时候有点页面，可以直接将主题文件内的 <strong>themes/hugo-theme-stack/exampleSite/content</strong> 里面的page和post页面，cp到主站点的content里面。</p>
 <p>PS：重启hugo server后，可能会出现超时的问题，是因为部分页面引用了外网链接，将<strong>content/post</strong>里面的这两个文件删除就可以正常跑起来了。</p>
 <blockquote>
 <p>placeholder-text</p>
 <p>rich-content</p>
 </blockquote>
-<p>4.创建新的博客页面
-新博客页面统一放置在<strong>content/post</strong>路径下，使用new命令会根据<strong>archetypes</strong>内预先配置好的模版创建.md文件。</p>
+<h3 id="创建新的博客页面">创建新的博客页面</h3>
+<p>新博客页面统一放置在<strong>content/post</strong>路径下，使用new命令会根据<strong>archetypes</strong>内预先配置好的模版创建.md文件。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -451,7 +459,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hugo new posts/new/index.md
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>5.本地启动服务</p>
+</div><h3 id="本地启动服务">本地启动服务</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -462,7 +470,7 @@
 </div>
 </div><p>默认端口为 <strong>:1313</strong></p>
 <p>直接打开http://localhost:1313/，就可以看到通过主题初始化后的博客啦。</p>
-<p>6.构建静态页面</p>
+<h3 id="构建静态页面">构建静态页面</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -473,7 +481,6 @@
 </div>
 </div><p>命令执行后，会在站点目录下生成一个 <strong>./public</strong> 文件，所有静态文件都打包在该目录下。</p>
 <p>后续部署会根据该文件进行静态文件部署～</p>
-<h2 id="heading"></h2>
 
 </section>
 
