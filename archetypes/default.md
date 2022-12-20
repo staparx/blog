@@ -1,5 +1,5 @@
 ---
-author = "Staparx"
+author : "Staparx"
 title: "{{ replace .Name "-" " " | title }}"
 description: 
 date: {{ .Date }}
