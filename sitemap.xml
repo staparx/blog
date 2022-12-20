@@ -2,10 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.staparx.cn/tags/blog/</loc>
-    <lastmod>2022-12-09T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://blog.staparx.cn/categories/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/tags/gdb/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/tags/gremlin/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/post/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/tags/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/tags/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/categories/%E6%94%B6%E8%97%8F%E5%A4%B9/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2022-12-20T16:47:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.staparx.cn/tags/blog/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.staparx.cn/tags/github/</loc>
@@ -15,15 +42,6 @@
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.staparx.cn/tags/hugo-theme-stack/</loc>
-    <lastmod>2022-12-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.staparx.cn/post/</loc>
-    <lastmod>2022-12-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.staparx.cn/</loc>
-    <lastmod>2022-12-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.staparx.cn/tags/</loc>
     <lastmod>2022-12-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.staparx.cn/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</loc>

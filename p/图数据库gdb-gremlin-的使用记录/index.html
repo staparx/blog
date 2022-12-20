@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='图数据库实用小技巧'>
+<title>图数据库GDB - Gremlin 的使用记录</title>
+
+<link rel='canonical' href='https://blog.staparx.cn/p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/'>
+
+<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='图数据库GDB - Gremlin 的使用记录'>
+<meta property='og:description' content='图数据库实用小技巧'>
+<meta property='og:url' content='https://blog.staparx.cn/p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/'>
+<meta property='og:site_name' content='Staparx'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='实用技巧' /><meta property='article:tag' content='图数据库' /><meta property='article:tag' content='GDB' /><meta property='article:tag' content='Gremlin' /><meta property='article:published_time' content='2022-12-20T16:47:40&#43;08:00'/><meta property='article:modified_time' content='2022-12-20T16:47:40&#43;08:00'/><meta property='og:image' content='https://blog.staparx.cn/p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/img.png' />
+<meta name="twitter:title" content="图数据库GDB - Gremlin 的使用记录">
+<meta name="twitter:description" content="图数据库实用小技巧"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://blog.staparx.cn/p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/img.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hua876ef27f5cf6ace9a0696bfbb151823_17574_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">✨</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Staparx</a></h1>
+            <h2 class="site-description">Just a gopher</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/staparx'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>首页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>文章</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#gremlin">Gremlin</a></li>
+    <li><a href="#复杂场景实战">复杂场景实战</a>
+      <ol>
+        <li><a href="#通用场景类">通用场景类</a>
+          <ol>
+            <li><a href="#求两个用户a和b的共同好友数">求两个用户A和B的共同好友数</a></li>
+            <li><a href="#k个用户的共同好友">K个用户的共同好友</a></li>
+            <li><a href="#排名前三的网络大v">排名前三的网络大V</a></li>
+            <li><a href="#图数据分布">图数据分布</a></li>
+            <li><a href="#找和a同公司的上三届师兄师姐">找和A同公司的上三届师兄、师姐</a></li>
+            <li><a href="#多级遍历--每级只关注特定点">多级遍历 &amp; 每级只关注特定点</a></li>
+            <li><a href="#多层级链路探索发现股权穿透类请求">多层级链路探索发现(股权穿透)类请求</a></li>
+            <li><a href="#根据特定点边数量进行路径过滤">根据特定点边数量进行路径过滤</a></li>
+          </ol>
+        </li>
+        <li><a href="#路径探索类">路径探索类</a>
+          <ol>
+            <li><a href="#两点之间最短路径">两点之间最短路径</a></li>
+            <li><a href="#带权重的最短路径">带权重的最短路径</a></li>
+            <li><a href="#股权穿透多级分销">股权穿透/多级分销</a></li>
+            <li><a href="#股权穿透保留符合特定条件的路径">股权穿透保留符合特定条件的路径</a></li>
+            <li><a href="#路径按边进行去重">路径按边进行去重</a></li>
+          </ol>
+        </li>
+        <li><a href="#联通子图">联通子图</a>
+          <ol>
+            <li><a href="#a点k度范围内-到-b点构建的联通子图">A点K度范围内 到 B点构建的联通子图</a></li>
+          </ol>
+        </li>
+        <li><a href="#协同推荐">协同推荐</a>
+          <ol>
+            <li><a href="#按照权重将不是好友的好友的好友推荐给自己">按照权重将不是好友的好友的好友推荐给自己</a></li>
+            <li><a href="#找出我关注的和双向关注的朋友">找出我关注的和双向关注的朋友</a></li>
+            <li><a href="#找出我的好友的好友b按照b和我之间的共同好友数量进行倒排作为推荐候选">找出我的好友的好友B，按照B和我之间的共同好友数量进行倒排，作为推荐候选</a></li>
+            <li><a href="#将teama球队-朋友球队的球员-按照其所在球队排列推荐给自己">将teamA球队 朋友球队的球员 按照其所在球队排列，推荐给自己</a></li>
+          </ol>
+        </li>
+        <li><a href="#特殊需求类">特殊需求类</a>
+          <ol>
+            <li><a href="#路径按照点边聚合">路径按照点、边聚合</a></li>
+            <li><a href="#所有路径按照点边聚合">所有路径按照点、边聚合</a></li>
+            <li><a href="#所有路径按点边聚合后返回所有的属性信息">所有路径按点、边聚合后，返回所有的属性信息</a></li>
+            <li><a href="#类型转换">类型转换</a></li>
+          </ol>
+        </li>
+        <li><a href="#批量更新">批量更新</a>
+          <ol>
+            <li><a href="#批量属性插入">批量属性插入</a></li>
+            <li><a href="#批量插入点插入边">批量插入点、插入边</a></li>
+            <li><a href="#存在就更新不存在插入">存在就更新，不存在插入</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">
+                <img src="/p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/img_huc2ebc3a27d57369e9bfac8deb1e28c15_91565_800x0_resize_box_3.png"
+                        srcset="/p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/img_huc2ebc3a27d57369e9bfac8deb1e28c15_91565_800x0_resize_box_3.png 800w, /p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/img_huc2ebc3a27d57369e9bfac8deb1e28c15_91565_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="310" 
+                        loading="lazy"
+                        alt="Featured image of post 图数据库GDB - Gremlin 的使用记录" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%94%B6%E8%97%8F%E5%A4%B9/" >
+                收藏夹
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93gdb-gremlin-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">图数据库GDB - Gremlin 的使用记录</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            图数据库实用小技巧
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 20, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 7 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="图数据库gdb的使用---gremlin">图数据库GDB的使用 - Gremlin</h1>
+<p>公司需求开发中，产品提出想要绘画出人员关系图。关系型数据库不太适合该场景，因此引入了图数据库（<a class="link" href="https://help.aliyun.com/product/102714.html"  target="_blank" rel="noopener"
+    >阿里云GDB</a>）。</p>
+<h2 id="gremlin">Gremlin</h2>
+<p><a class="link" href="http://tinkerpop-gremlin.cn/?spm=a2c4g.11186623.0.0.3eb77ca3qPNew2#traversal"  target="_blank" rel="noopener"
+    >Gremlin中文文档</a></p>
+<h2 id="复杂场景实战">复杂场景实战</h2>
+<h3 id="通用场景类">通用场景类</h3>
+<h4 id="求两个用户a和b的共同好友数">求两个用户A和B的共同好友数</h4>
+<p>下面输出A的好友数、B的好友数、共同好友数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">g.inject<span class="o">(</span><span class="s1">&#39;any&#39;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">sideEffect<span class="o">(</span>g.V<span class="o">(</span><span class="s1">&#39;A&#39;</span><span class="o">)</span>.bothE<span class="o">()</span>.otherV<span class="o">()</span>.aggregate<span class="o">(</span><span class="s1">&#39;v1&#39;</span><span class="o">))</span>.
+</span></span><span class="line"><span class="cl">sideEffect<span class="o">(</span>g.V<span class="o">(</span><span class="s1">&#39;B&#39;</span><span class="o">)</span>.bothE<span class="o">()</span>.otherV<span class="o">()</span>.aggregate<span class="o">(</span><span class="s1">&#39;v2&#39;</span><span class="o">))</span>.
+</span></span><span class="line"><span class="cl">project<span class="o">(</span><span class="s1">&#39;count1&#39;</span>, <span class="s1">&#39;count2&#39;</span>, <span class="s1">&#39;countMerge&#39;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s1">&#39;v1&#39;</span><span class="o">)</span>.unfold<span class="o">()</span>.count<span class="o">())</span>.
+</span></span><span class="line"><span class="cl">by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s1">&#39;v2&#39;</span><span class="o">)</span>.unfold<span class="o">()</span>.count<span class="o">())</span>.
+</span></span><span class="line"><span class="cl">by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s1">&#39;v1&#39;</span><span class="o">)</span>.unfold<span class="o">()</span>.where<span class="o">(</span>within<span class="o">(</span><span class="s1">&#39;v2&#39;</span><span class="o">))</span>.count<span class="o">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="k个用户的共同好友">K个用户的共同好友</h4>
+<p>上面的情况进一步拓展，要求K个好友的共同好友，假定求1，3，5这三个用户的共同好友，可以这样计算。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span>1, 3, 5<span class="o">)</span>.both<span class="o">()</span>.groupCount<span class="o">()</span>.unfold<span class="o">()</span>.where<span class="o">(</span><span class="k">select</span><span class="o">(</span>values<span class="o">)</span>.is<span class="o">(</span>3<span class="o">))</span>.select<span class="o">(</span>keys<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;v<span class="o">[</span>4<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果5是超级顶点，则可以这样计算。
+方法3： 如果5是超级点，1，3是一般的点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">g.V<span class="o">(</span>1,3<span class="o">)</span>.both<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;x&#34;</span><span class="o">)</span>.both<span class="o">()</span>.where<span class="o">(</span>id<span class="o">()</span>.is<span class="o">(</span>5<span class="o">))</span>.
+</span></span><span class="line"><span class="cl"><span class="k">select</span><span class="o">(</span><span class="s2">&#34;x&#34;</span><span class="o">)</span>.groupCount<span class="o">()</span>.unfold<span class="o">()</span>.where<span class="o">(</span><span class="k">select</span><span class="o">(</span>values<span class="o">)</span>.is<span class="o">(</span>2<span class="o">))</span>.select<span class="o">(</span>keys<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="排名前三的网络大v">排名前三的网络大V</h4>
+<p>社交场景中，大V往往是根据粉丝的数量来衡量，粉丝越多说明越受欢迎，加入我们要找到拥有粉丝最多的三个大V，可以这样找</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">g.V<span class="o">()</span>.project<span class="o">(</span><span class="s1">&#39;user&#39;</span>,<span class="s1">&#39;degree&#39;</span><span class="o">)</span>.by<span class="o">()</span>.by<span class="o">(</span>inE<span class="o">()</span>.count<span class="o">())</span>.order<span class="o">()</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s1">&#39;degree&#39;</span><span class="o">)</span>, desc<span class="o">)</span>.limit<span class="o">(</span>3<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="图数据分布">图数据分布</h4>
+<p>以巴拉巴西为代表的科学家们发现了大量满足幂律的网络结构，这种网络被称为无标度网络。人们越来越倾向于认为，幂律（Power Law）是无处不在规律，尤其在复杂网络中。</p>
+<h4 id="找和a同公司的上三届师兄师姐">找和A同公司的上三届师兄、师姐</h4>
+<p>小A刚入职，可以将本公司小A的师兄、师姐推荐给小A，让小A尽量通过熟人的帮助尽快融入工作小圈子，可以这样写。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">g.V<span class="o">()</span>.hasLabel<span class="o">(</span><span class="s1">&#39;person&#39;</span><span class="o">)</span>.hasId<span class="o">(</span><span class="s1">&#39;A&#39;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">sideEffect<span class="o">(</span>out<span class="o">(</span><span class="s1">&#39;workAt&#39;</span><span class="o">)</span>.aggregate<span class="o">(</span><span class="s1">&#39;company&#39;</span><span class="o">))</span>.
+</span></span><span class="line"><span class="cl">outE<span class="o">(</span><span class="s1">&#39;studyAt&#39;</span><span class="o">)</span>.has<span class="o">(</span><span class="s1">&#39;classYear&#39;</span>, <span class="s1">&#39;2009&#39;</span><span class="o">)</span>.inV<span class="o">()</span>. // 求学于哪个学校
+</span></span><span class="line"><span class="cl">inE<span class="o">(</span><span class="s1">&#39;studyAt&#39;</span><span class="o">)</span>.has<span class="o">(</span><span class="s1">&#39;classYear&#39;</span>, within<span class="o">(</span><span class="s1">&#39;2009&#39;</span>, <span class="s1">&#39;2008&#39;</span>, <span class="s1">&#39;2007&#39;</span>, <span class="s1">&#39;2006&#39;</span><span class="o">))</span>.
+</span></span><span class="line"><span class="cl">outV<span class="o">()</span>.has<span class="o">(</span>id, neq<span class="o">(</span><span class="s1">&#39;p1024&#39;</span><span class="o">))</span>.  //该学校06-09年毕业的其他学生
+</span></span><span class="line"><span class="cl">where<span class="o">(</span>out<span class="o">(</span><span class="s1">&#39;workAt&#39;</span><span class="o">)</span>.where<span class="o">(</span>within<span class="o">(</span><span class="s1">&#39;company&#39;</span><span class="o">)))</span> // 也再该公司的校友集合
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="多级遍历--每级只关注特定点">多级遍历 &amp; 每级只关注特定点</h4>
+<p>这种场景是k跳遍历的一种特殊情况，再每一跳中，我们只关注top1，这里的top1可以为某个属性的权重等，这种场景再金融领域也比较场景, 比如我们再每一跳中，只取weight权重最高的这条边，并沿着这条边一直走到终点。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span>1<span class="o">)</span>.repeat<span class="o">(</span>__.flatMap<span class="o">(</span>outE<span class="o">(</span><span class="s2">&#34;knows&#34;</span><span class="o">)</span>.order<span class="o">()</span>.by<span class="o">(</span><span class="s1">&#39;weight&#39;</span>,desc<span class="o">)</span>.limit<span class="o">(</span>1<span class="o">)</span>.otherV<span class="o">()))</span>.
+</span></span><span class="line"><span class="cl"><span class="k">until</span><span class="o">(</span>__.not<span class="o">(</span>outE<span class="o">(</span><span class="s2">&#34;knows&#34;</span><span class="o">)))</span>.path<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="多层级链路探索发现股权穿透类请求">多层级链路探索发现(股权穿透)类请求</h4>
+<p>从某个点出发，不断的向外拓展，找出一个联通子图</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span>1<span class="o">)</span>.repeat<span class="o">(</span>both<span class="o">()</span>.dedup<span class="o">())</span>.emit<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;v<span class="o">[</span>3<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;v<span class="o">[</span>2<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;v<span class="o">[</span>4<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;v<span class="o">[</span>1<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;v<span class="o">[</span>6<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;v<span class="o">[</span>5<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="根据特定点边数量进行路径过滤">根据特定点边数量进行路径过滤</h4>
+<p>比如有个sql从start开始， PeopleA和PeopleB两个分支，用户需要根据每个分支的边的数量进行过滤，比如上图中PeopleA有两个路径，PeopleB只有一个路径，此时选择路径A，这个sql如何写？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">==</span>&gt;All scripts will now be evaluated locally - <span class="nb">type</span> <span class="s1">&#39;:remote console&#39;</span> to <span class="k">return</span> to remote mode <span class="k">for</span> Gremlin Server - <span class="o">[</span>localhost/127.0.0.1:3002<span class="o">]</span>
+</span></span><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">)</span>.out<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;2&#34;</span><span class="o">)</span>.project<span class="o">(</span><span class="s2">&#34;f&#34;</span>, <span class="s2">&#34;e&#34;</span><span class="o">)</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">))</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;2&#34;</span><span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>2<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>4<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>4<span class="o">]</span>,e:v<span class="o">[</span>5<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>4<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>6<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">)</span>.out<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;2&#34;</span><span class="o">)</span>.project<span class="o">(</span><span class="s2">&#34;f&#34;</span>, <span class="s2">&#34;e&#34;</span><span class="o">)</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">))</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;2&#34;</span><span class="o">))</span>.
+</span></span><span class="line"><span class="cl">group<span class="o">()</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;f&#34;</span><span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>:<span class="o">[[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]</span>,<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>2<span class="o">]]</span>,<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>4<span class="o">]]]</span>,
+</span></span><span class="line"><span class="cl">v<span class="o">[</span>4<span class="o">]</span>:<span class="o">[[</span>f:v<span class="o">[</span>4<span class="o">]</span>,e:v<span class="o">[</span>5<span class="o">]]</span>,<span class="o">[</span>f:v<span class="o">[</span>4<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]]</span>,
+</span></span><span class="line"><span class="cl">v<span class="o">[</span>6<span class="o">]</span>:<span class="o">[[</span>f:v<span class="o">[</span>6<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">)</span>.out<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;2&#34;</span><span class="o">)</span>.project<span class="o">(</span><span class="s2">&#34;f&#34;</span>, <span class="s2">&#34;e&#34;</span><span class="o">)</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">))</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;2&#34;</span><span class="o">))</span>.
+</span></span><span class="line"><span class="cl">group<span class="o">()</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;f&#34;</span><span class="o">))</span>.select<span class="o">(</span>values<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[[[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]</span>,<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>2<span class="o">]]</span>,<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>4<span class="o">]]]</span>,
+</span></span><span class="line"><span class="cl"><span class="o">[[</span>f:v<span class="o">[</span>4<span class="o">]</span>,e:v<span class="o">[</span>5<span class="o">]]</span>,<span class="o">[</span>f:v<span class="o">[</span>4<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]]</span>,
+</span></span><span class="line"><span class="cl"><span class="o">[[</span>f:v<span class="o">[</span>6<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">)</span>.out<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;2&#34;</span><span class="o">)</span>.project<span class="o">(</span><span class="s2">&#34;f&#34;</span>, <span class="s2">&#34;e&#34;</span><span class="o">)</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">))</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;2&#34;</span><span class="o">))</span>.
+</span></span><span class="line"><span class="cl">group<span class="o">()</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;f&#34;</span><span class="o">))</span>.select<span class="o">(</span>values<span class="o">)</span>. //按照f第一列进行聚合，并选择values
+</span></span><span class="line"><span class="cl">unfold<span class="o">()</span>.where<span class="o">(</span>count<span class="o">(</span><span class="nb">local</span><span class="o">)</span>.is<span class="o">(</span>gte<span class="o">(</span>2<span class="o">)))</span>. //聚合后，去掉外层的list，并求内层的数量，过滤
+</span></span><span class="line"><span class="cl">unfold<span class="o">()</span> // 最后再unfold，即为结果
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>2<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>1<span class="o">]</span>,e:v<span class="o">[</span>4<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>4<span class="o">]</span>,e:v<span class="o">[</span>5<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>f:v<span class="o">[</span>4<span class="o">]</span>,e:v<span class="o">[</span>3<span class="o">]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="路径探索类">路径探索类</h3>
+<h4 id="两点之间最短路径">两点之间最短路径</h4>
+<p>根据6度理论，再社交场景中，任何两个点的距离都在6度以内。如果小A有急事需要找著名医院的小B医生帮忙，可以A和B之间有无数路径，我们只关注最短的路径，从而提高求助效率。可以这样写。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">g.V<span class="o">(</span><span class="s2">&#34;A&#34;</span><span class="o">)</span>.repeat<span class="o">(</span>both<span class="o">()</span>.simplePath<span class="o">())</span>.
+</span></span><span class="line"><span class="cl"><span class="k">until</span><span class="o">(</span>hasId<span class="o">(</span><span class="s2">&#34;B&#34;</span><span class="o">)</span>.or<span class="o">()</span>.loops<span class="o">()</span>.is<span class="o">(</span>gt<span class="o">(</span>6L<span class="o">)))</span>.
+</span></span><span class="line"><span class="cl">hasId<span class="o">(</span><span class="s2">&#34;B&#34;</span><span class="o">)</span>.path<span class="o">()</span>.limit<span class="o">(</span>1<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="带权重的最短路径">带权重的最短路径</h4>
+<p>有时候最短路径并不是按照hop跳数定义，而是根据边上的某些属性定义，这样稍微复杂点，比如下图，1 - 3之间有两条路径，按照边的weight属性累积求和作为路径的权重，从而求出最短路径。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">)</span>.repeat<span class="o">(</span>outE<span class="o">()</span>.inV<span class="o">()</span>.simplePath<span class="o">())</span>.
+</span></span><span class="line"><span class="cl"><span class="k">until</span><span class="o">(</span>hasId<span class="o">(</span><span class="s2">&#34;3&#34;</span><span class="o">)</span>.or<span class="o">()</span>.loops<span class="o">()</span>.is<span class="o">(</span>gt<span class="o">(</span>1<span class="o">)))</span>.hasId<span class="o">(</span><span class="s2">&#34;3&#34;</span><span class="o">)</span>.path<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;p&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">map<span class="o">(</span>unfold<span class="o">()</span>.coalesce<span class="o">(</span>values<span class="o">(</span><span class="s2">&#34;weight&#34;</span><span class="o">)</span>, constant<span class="o">(</span>0.0<span class="o">))</span>.sum<span class="o">())</span>.as<span class="o">(</span><span class="s2">&#34;cost&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl"><span class="k">select</span><span class="o">(</span><span class="s2">&#34;cost&#34;</span>,<span class="s2">&#34;p&#34;</span><span class="o">)</span>.order<span class="o">()</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;cost&#34;</span><span class="o">)</span>, Order.incr<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:0.4,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>9<span class="o">][</span>1-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:1.4,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="股权穿透多级分销">股权穿透/多级分销</h4>
+<p>这类场景再企业控股类场景，比如a持股b 50%； b持股c 50%，则a持股c 25%；或者社交产品分销场景中非常常见。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.withSack<span class="o">(</span>1.0f<span class="o">)</span>.V<span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">repeat<span class="o">(</span>outE<span class="o">()</span>.sack<span class="o">(</span>mult<span class="o">)</span>.by<span class="o">(</span><span class="s2">&#34;weight&#34;</span><span class="o">)</span>.inV<span class="o">()</span>.simplePath<span class="o">())</span>
+</span></span><span class="line"><span class="cl">.emit<span class="o">()</span>.path<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;p&#34;</span><span class="o">)</span>.sack<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;cost&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl"><span class="k">select</span><span class="o">(</span><span class="s2">&#34;cost&#34;</span>,<span class="s2">&#34;p&#34;</span><span class="o">)</span>.order<span class="o">()</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;cost&#34;</span><span class="o">)</span>,Order.desc<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:1.0,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:1.0,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>10<span class="o">][</span>4-created-&gt;5<span class="o">]</span>,v<span class="o">[</span>5<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:0.5,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>7<span class="o">][</span>1-knows-&gt;2<span class="o">]</span>,v<span class="o">[</span>2<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:0.4,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>9<span class="o">][</span>1-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:0.4,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="股权穿透保留符合特定条件的路径">股权穿透保留符合特定条件的路径</h4>
+<p>比如在股权累乘时只保留 累乘结果 &gt; 0.5的路径，过滤掉 &lt;= 0.5的路径，可以参考：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.withSack<span class="o">(</span>1.0f<span class="o">)</span>.V<span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">)</span>.repeat<span class="o">(</span>outE<span class="o">()</span>.sack<span class="o">(</span>mult<span class="o">)</span>.by<span class="o">(</span><span class="s2">&#34;weight&#34;</span><span class="o">)</span>.where<span class="o">(</span>sack<span class="o">()</span>.is<span class="o">(</span>gte<span class="o">(</span>0.5<span class="o">)))</span>.inV<span class="o">()</span>.simplePath<span class="o">())</span>.emit<span class="o">()</span>.path<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;p&#34;</span><span class="o">)</span>.sack<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;cost&#34;</span><span class="o">)</span>.select<span class="o">(</span><span class="s2">&#34;cost&#34;</span>, <span class="s2">&#34;p&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">gremlin&gt; g.withSack<span class="o">(</span>1.0f<span class="o">)</span>.V<span class="o">(</span><span class="s2">&#34;1&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">repeat<span class="o">(</span>outE<span class="o">()</span>.sack<span class="o">(</span>mult<span class="o">)</span>.by<span class="o">(</span><span class="s2">&#34;weight&#34;</span><span class="o">)</span>.where<span class="o">(</span>sack<span class="o">()</span>.is<span class="o">(</span>gte<span class="o">(</span>0.5<span class="o">)))</span>.inV<span class="o">()</span>.simplePath<span class="o">())</span>.
+</span></span><span class="line"><span class="cl">emit<span class="o">()</span>.path<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;p&#34;</span><span class="o">)</span>.sack<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;cost&#34;</span><span class="o">)</span>.select<span class="o">(</span><span class="s2">&#34;cost&#34;</span>, <span class="s2">&#34;p&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:0.5,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>7<span class="o">][</span>1-knows-&gt;2<span class="o">]</span>,v<span class="o">[</span>2<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:1.0,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:1.0,p:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>10<span class="o">][</span>4-created-&gt;5<span class="o">]</span>,v<span class="o">[</span>5<span class="o">]]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="路径按边进行去重">路径按边进行去重</h4>
+<p>不同于neo4j的path默认是边去重。gremlin查询语言的path去重是不区分点和边，也就是按照path中的object对象进行去重。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## 如果使用下面方式，则会出现A-D-A-D循环，一般不是用户需要的</span>
+</span></span><span class="line"><span class="cl">g.V<span class="o">(</span><span class="s2">&#34;A&#34;</span><span class="o">)</span>.repeat<span class="o">(</span>bothE<span class="o">()</span>.otherV<span class="o">())</span>.until<span class="o">(</span>hasId<span class="o">(</span>3<span class="o">)</span>.or<span class="o">()</span>.loops<span class="o">()</span>.is<span class="o">(</span>gte<span class="o">(</span>4<span class="o">)))</span>.hasId<span class="o">(</span>3<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 如果使用simplePath方式，则不会出现A-D-E-D这条路径，虽然D-E之间有两条路径</span>
+</span></span><span class="line"><span class="cl">g.V<span class="o">(</span><span class="s2">&#34;A&#34;</span><span class="o">)</span>.repeat<span class="o">(</span>bothE<span class="o">()</span>.otherV<span class="o">()</span>.simplePath<span class="o">())</span>.until<span class="o">(</span>hasId<span class="o">(</span>3<span class="o">)</span>.or<span class="o">()</span>.loops<span class="o">()</span>.is<span class="o">(</span>gte<span class="o">(</span>4<span class="o">)))</span>.hasId<span class="o">(</span>3<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果需要上述中A-D-E-D这种路径，但又不希望A-D之间的边重复多次，这种场景就是典型的边去重模式，可惜目前gremlin的框架不支持，相关讨论参考gremlin-users讨论。即使如此，用gremlin的用户依然可以有两种方案来规避：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## 方案1. 使用groovy语法</span>
+</span></span><span class="line"><span class="cl">gremlin&gt; g.withSack <span class="o">{[</span><span class="s1">&#39;~~&#39;</span><span class="o">]}{</span>it.clone<span class="o">()}</span>.V<span class="o">(</span>1<span class="o">)</span>.repeat<span class="o">(</span>bothE<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;e&#34;</span><span class="o">)</span>.filter<span class="o">(</span>__.sack<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;list&#34;</span><span class="o">)</span>.select<span class="o">(</span><span class="s2">&#34;e&#34;</span><span class="o">)</span>.where<span class="o">(</span>without<span class="o">(</span><span class="s2">&#34;list&#34;</span><span class="o">)))</span>.sack<span class="o">{</span>m,v -&gt; <span class="nv">m</span> <span class="o">+=</span> v<span class="p">;</span> m<span class="o">}</span>.otherV<span class="o">())</span>.times<span class="o">(</span>2<span class="o">)</span>.path<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>9<span class="o">][</span>1-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>9<span class="o">][</span>1-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]</span>,e<span class="o">[</span>12<span class="o">][</span>6-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>6<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>10<span class="o">][</span>4-created-&gt;5<span class="o">]</span>,v<span class="o">[</span>5<span class="o">]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>0<span class="o">][</span>5-fake-&gt;4<span class="o">]</span>,v<span class="o">[</span>5<span class="o">]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 解释</span>
+</span></span><span class="line"><span class="cl">g.withSack <span class="o">{[</span><span class="s1">&#39;~~&#39;</span><span class="o">]}{</span>it.clone<span class="o">()}</span>.V<span class="o">(</span>1<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">repeat<span class="o">(</span>bothE<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;e&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">filter<span class="o">(</span>__.sack<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;list&#34;</span><span class="o">)</span>.select<span class="o">(</span><span class="s2">&#34;e&#34;</span><span class="o">)</span>.where<span class="o">(</span>without<span class="o">(</span><span class="s2">&#34;list&#34;</span><span class="o">)))</span>. //往外跳时，对边做过滤
+</span></span><span class="line"><span class="cl">sack<span class="o">{</span>m,v -&gt; <span class="nv">m</span> <span class="o">+=</span> v<span class="p">;</span> m<span class="o">}</span>.otherV<span class="o">())</span>.   //将新的边插入到sack中，表示该边已经被过滤过
+</span></span><span class="line"><span class="cl">times<span class="o">(</span>2<span class="o">)</span>.path<span class="o">()</span> //循环2度并退出循环
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">作为对比，非边去重的结果，可以看到edge 9再path中出现两次：
+</span></span><span class="line"><span class="cl">gremlin&gt; g.withSack <span class="o">{[</span><span class="s1">&#39;~~&#39;</span><span class="o">]}{</span>it.clone<span class="o">()}</span>.V<span class="o">(</span>1<span class="o">)</span>.repeat<span class="o">(</span>bothE<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;e&#34;</span><span class="o">)</span>.sack<span class="o">{</span>m,v -&gt; <span class="nv">m</span> <span class="o">+=</span> v<span class="p">;</span> m<span class="o">}</span>.otherV<span class="o">())</span>.times<span class="o">(</span>2<span class="o">)</span>.path<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>9<span class="o">][</span>1-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]</span>,e<span class="o">[</span>9<span class="o">][</span>1-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>1<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>7<span class="o">][</span>1-knows-&gt;2<span class="o">]</span>,v<span class="o">[</span>2<span class="o">]</span>,e<span class="o">[</span>7<span class="o">][</span>1-knows-&gt;2<span class="o">]</span>,v<span class="o">[</span>1<span class="o">]]</span>
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 方案2. 先不考虑边重复问题，找到结果。并对最终每个path进行判断，判断其是否有重复的边</span>
+</span></span><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span>1<span class="o">)</span>.repeat<span class="o">(</span>bothE<span class="o">()</span>.otherV<span class="o">())</span>.until<span class="o">(</span>hasId<span class="o">(</span>3<span class="o">)</span>.or<span class="o">()</span>.loops<span class="o">()</span>.is<span class="o">(</span>gte<span class="o">(</span>4<span class="o">)))</span>.hasId<span class="o">(</span>3<span class="o">)</span>.path<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;p&#34;</span><span class="o">)</span>.flatMap<span class="o">(</span>unfold<span class="o">()</span>.group<span class="o">()</span>.by<span class="o">(</span>choose<span class="o">(</span>hasLabel<span class="o">(</span><span class="s2">&#34;person&#34;</span>, <span class="s2">&#34;software&#34;</span><span class="o">)</span>, __.constant<span class="o">(</span><span class="s2">&#34;v&#34;</span><span class="o">)</span>, __.constant<span class="o">(</span><span class="s2">&#34;e&#34;</span><span class="o">))))</span>.select<span class="o">(</span><span class="s2">&#34;e&#34;</span><span class="o">)</span>.as<span class="o">(</span><span class="s2">&#34;origin_e&#34;</span><span class="o">)</span>.dedup<span class="o">(</span><span class="nb">local</span><span class="o">)</span>.as<span class="o">(</span><span class="s2">&#34;dedup_e&#34;</span><span class="o">)</span>.filter<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;dedup_e&#34;</span>, <span class="s2">&#34;origin_e&#34;</span><span class="o">)</span>.by<span class="o">(</span>count<span class="o">(</span><span class="nb">local</span><span class="o">))</span>.where<span class="o">(</span><span class="s2">&#34;dedup_e&#34;</span>, eq<span class="o">(</span><span class="s2">&#34;origin_e&#34;</span><span class="o">)))</span>.select<span class="o">(</span><span class="s2">&#34;p&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>9<span class="o">][</span>1-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>10<span class="o">][</span>4-created-&gt;5<span class="o">]</span>,v<span class="o">[</span>5<span class="o">]</span>,e<span class="o">[</span>0<span class="o">][</span>5-fake-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>0<span class="o">][</span>5-fake-&gt;4<span class="o">]</span>,v<span class="o">[</span>5<span class="o">]</span>,e<span class="o">[</span>10<span class="o">][</span>4-created-&gt;5<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span>1<span class="o">)</span>.repeat<span class="o">(</span>bothE<span class="o">()</span>.otherV<span class="o">())</span>.until<span class="o">(</span>hasId<span class="o">(</span>3<span class="o">)</span>.or<span class="o">()</span>.loops<span class="o">()</span>.is<span class="o">(</span>gte<span class="o">(</span>4<span class="o">)))</span>.hasId<span class="o">(</span>3<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">path<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;p&#34;</span><span class="o">)</span>.    // 求出所有path
+</span></span><span class="line"><span class="cl">flatMap<span class="o">(</span>unfold<span class="o">()</span>.group<span class="o">()</span>.  //path按照点、边进行聚合
+</span></span><span class="line"><span class="cl">by<span class="o">(</span>choose<span class="o">(</span>hasLabel<span class="o">(</span><span class="s2">&#34;person&#34;</span>, <span class="s2">&#34;software&#34;</span><span class="o">)</span>, __.constant<span class="o">(</span><span class="s2">&#34;v&#34;</span><span class="o">)</span>, __.constant<span class="o">(</span><span class="s2">&#34;e&#34;</span><span class="o">))))</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">select</span><span class="o">(</span><span class="s2">&#34;e&#34;</span><span class="o">)</span>.as<span class="o">(</span><span class="s2">&#34;origin_e&#34;</span><span class="o">)</span>.dedup<span class="o">(</span><span class="nb">local</span><span class="o">)</span>.as<span class="o">(</span><span class="s2">&#34;dedup_e&#34;</span><span class="o">)</span>. // 对边进行去重
+</span></span><span class="line"><span class="cl">    filter<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;dedup_e&#34;</span>, <span class="s2">&#34;origin_e&#34;</span><span class="o">)</span>.by<span class="o">(</span>count<span class="o">(</span><span class="nb">local</span><span class="o">))</span>. // 如果去重后count一样，说明没有重复
+</span></span><span class="line"><span class="cl">           where<span class="o">(</span><span class="s2">&#34;dedup_e&#34;</span>, eq<span class="o">(</span><span class="s2">&#34;origin_e&#34;</span><span class="o">)))</span>.
+</span></span><span class="line"><span class="cl">    <span class="k">select</span><span class="o">(</span><span class="s2">&#34;p&#34;</span><span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="联通子图">联通子图</h3>
+<h4 id="a点k度范围内-到-b点构建的联通子图">A点K度范围内 到 B点构建的联通子图</h4>
+<p>和路径搜索类-两点之间最短路径场景非常类似，不过用户期望A的K度邻居范围内只要有B点，则将A、B和A的K度邻居组成一个联通子图，比如：用户需要A的4度邻居与C组成的联通子图：</p>
+<p>用gremlin的写入如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span><span class="s1">&#39;1&#39;</span><span class="o">)</span>.aggregate<span class="o">(</span><span class="s1">&#39;vertex&#39;</span><span class="o">)</span>.repeat<span class="o">(</span>bothE<span class="o">()</span>.aggregate<span class="o">(</span><span class="s1">&#39;edge&#39;</span><span class="o">)</span>.otherV<span class="o">()</span>.aggregate<span class="o">(</span><span class="s1">&#39;vertex&#39;</span><span class="o">))</span>.until<span class="o">(</span>loops<span class="o">()</span>.is<span class="o">(</span>gte<span class="o">(</span>1<span class="o">)))</span>.tail<span class="o">(</span>1<span class="o">)</span>.V<span class="o">(</span>3<span class="o">)</span>.as<span class="o">(</span><span class="s2">&#34;dst&#34;</span><span class="o">)</span>.where<span class="o">(</span><span class="s2">&#34;dst&#34;</span>, within<span class="o">(</span><span class="s2">&#34;vertex&#34;</span><span class="o">))</span>.select<span class="o">(</span><span class="s1">&#39;vertex&#39;</span>, <span class="s1">&#39;edge&#39;</span><span class="o">)</span>.by<span class="o">(</span>dedup<span class="o">(</span><span class="nb">local</span><span class="o">))</span>.by<span class="o">(</span>dedup<span class="o">(</span><span class="nb">local</span><span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>vertex:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]</span>,v<span class="o">[</span>2<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]]</span>,edge:<span class="o">[</span>e<span class="o">[</span>9<span class="o">][</span>1-created-&gt;3<span class="o">]</span>,e<span class="o">[</span>7<span class="o">][</span>1-knows-&gt;2<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 解释 以起点为1，终点为3， khop为1， 及1的1跳内连通图包含3构成的子图</span>
+</span></span><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span><span class="s1">&#39;1&#39;</span><span class="o">)</span>.aggregate<span class="o">(</span><span class="s1">&#39;vertex&#39;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">repeat<span class="o">(</span>bothE<span class="o">()</span>.aggregate<span class="o">(</span><span class="s1">&#39;edge&#39;</span><span class="o">)</span>.otherV<span class="o">()</span>.aggregate<span class="o">(</span><span class="s1">&#39;vertex&#39;</span><span class="o">))</span>. // 将中间的点和边进行汇聚存储
+</span></span><span class="line"><span class="cl"><span class="k">until</span><span class="o">(</span>loops<span class="o">()</span>.is<span class="o">(</span>gte<span class="o">(</span>1<span class="o">)))</span>.tail<span class="o">(</span>1<span class="o">)</span>.  //1跳，取最后一行
+</span></span><span class="line"><span class="cl">V<span class="o">(</span>3<span class="o">)</span>.as<span class="o">(</span><span class="s2">&#34;dst&#34;</span><span class="o">)</span>.where<span class="o">(</span><span class="s2">&#34;dst&#34;</span>, within<span class="o">(</span><span class="s2">&#34;vertex&#34;</span><span class="o">))</span>.  // 联通子图中的点需要用终点3进行判断
+</span></span><span class="line"><span class="cl"><span class="k">select</span><span class="o">(</span><span class="s1">&#39;vertex&#39;</span>, <span class="s1">&#39;edge&#39;</span><span class="o">)</span>.by<span class="o">(</span>dedup<span class="o">(</span><span class="nb">local</span><span class="o">))</span>.by<span class="o">(</span>dedup<span class="o">(</span><span class="nb">local</span><span class="o">))</span> // 点和边分开存储，便于可视化绘图
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="协同推荐">协同推荐</h3>
+<h4 id="按照权重将不是好友的好友的好友推荐给自己">按照权重将不是好友的好友的好友推荐给自己</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.withSack<span class="o">(</span>1.0f<span class="o">)</span>.V<span class="o">(</span>1<span class="o">)</span>.aggregate<span class="o">(</span><span class="s2">&#34;friends&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">sideEffect<span class="o">(</span>both<span class="o">()</span>.aggregate<span class="o">(</span><span class="s2">&#34;friends&#34;</span><span class="o">))</span>.
+</span></span><span class="line"><span class="cl">bothE<span class="o">()</span>.sack<span class="o">(</span>mult<span class="o">)</span>.by<span class="o">(</span><span class="s2">&#34;weight&#34;</span><span class="o">)</span>.otherV<span class="o">()</span>.
+</span></span><span class="line"><span class="cl">bothE<span class="o">()</span>.sack<span class="o">(</span>mult<span class="o">)</span>.by<span class="o">(</span><span class="s2">&#34;weight&#34;</span><span class="o">)</span>.otherV<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;last_node&#34;</span><span class="o">)</span>.where<span class="o">(</span>without<span class="o">(</span><span class="s2">&#34;friends&#34;</span><span class="o">))</span>.dedup<span class="o">()</span>.
+</span></span><span class="line"><span class="cl">sack<span class="o">()</span>.as<span class="o">(</span><span class="s2">&#34;cost&#34;</span><span class="o">)</span>.order<span class="o">()</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;cost&#34;</span><span class="o">)</span>, desc<span class="o">)</span>.select<span class="o">(</span><span class="s2">&#34;cost&#34;</span>, <span class="s2">&#34;last_node&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:1.0,last_node:v<span class="o">[</span>5<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>cost:0.08000000000000002,last_node:v<span class="o">[</span>6<span class="o">]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="找出我关注的和双向关注的朋友">找出我关注的和双向关注的朋友</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">g.V<span class="o">(</span>my_id<span class="o">)</span>.sideEffect<span class="o">(</span>__.in<span class="o">()</span>.id<span class="o">()</span>.aggregate<span class="o">(</span><span class="s1">&#39;subscribe&#39;</span><span class="o">))</span>. // 关注我的
+</span></span><span class="line"><span class="cl">outE<span class="o">()</span>.order<span class="o">()</span>.by<span class="o">(</span><span class="s1">&#39;createAt&#39;</span>,desc<span class="o">)</span>.inV<span class="o">()</span>.sideEffect<span class="o">(</span>__.id<span class="o">()</span>.aggregate<span class="o">(</span><span class="s1">&#39;i_subscribe&#39;</span><span class="o">))</span>. //我关注的
+</span></span><span class="line"><span class="cl">choose<span class="o">(</span>__.id<span class="o">()</span>.where<span class="o">(</span>within<span class="o">(</span><span class="s1">&#39;subscribe&#39;</span><span class="o">))</span>,__.id<span class="o">()</span>.aggregate<span class="o">(</span><span class="s1">&#39;both_subscribe&#39;</span><span class="o">))</span>. //双向关注的
+</span></span><span class="line"><span class="cl">cap<span class="o">(</span><span class="s1">&#39;i_subscribe&#39;</span>,<span class="s1">&#39;both_subscribe&#39;</span><span class="o">)</span> //输出
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="找出我的好友的好友b按照b和我之间的共同好友数量进行倒排作为推荐候选">找出我的好友的好友B，按照B和我之间的共同好友数量进行倒排，作为推荐候选</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span>1<span class="o">)</span>.both<span class="o">()</span>.aggregate<span class="o">(</span><span class="s2">&#34;my_friend&#34;</span><span class="o">)</span>.  // 1度好友
+</span></span><span class="line"><span class="cl">both<span class="o">()</span>.has<span class="o">(</span>id, neq<span class="o">(</span>1<span class="o">))</span>.as<span class="o">(</span><span class="s2">&#34;ff&#34;</span><span class="o">)</span>.   //2度好友，但不能包含自己
+</span></span><span class="line"><span class="cl">flatMap<span class="o">(</span>__.both<span class="o">()</span>.where<span class="o">(</span>within<span class="o">(</span><span class="s2">&#34;my_friend&#34;</span><span class="o">))</span>.count<span class="o">())</span>. // 和自己共同好友数
+</span></span><span class="line"><span class="cl">as<span class="o">(</span><span class="s2">&#34;comm_cnt&#34;</span><span class="o">)</span>.order<span class="o">()</span>.by<span class="o">(</span>desc<span class="o">)</span>. // 倒排输出2度好友和共同好友数量
+</span></span><span class="line"><span class="cl"><span class="k">select</span><span class="o">(</span><span class="s2">&#34;ff&#34;</span>, <span class="s2">&#34;comm_cnt&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>ff:v<span class="o">[</span>4<span class="o">]</span>,comm_cnt:1<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>ff:v<span class="o">[</span>6<span class="o">]</span>,comm_cnt:1<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>ff:v<span class="o">[</span>5<span class="o">]</span>,comm_cnt:1<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>ff:v<span class="o">[</span>3<span class="o">]</span>,comm_cnt:1<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="将teama球队-朋友球队的球员-按照其所在球队排列推荐给自己">将teamA球队 朋友球队的球员 按照其所在球队排列，推荐给自己</h4>
+<p>图片和构图参考<a class="link" href="https://stackoverflow.com/questions/71178226/tinkerpop-gremlin-how-get-child-elements-filtered-and-grouped"  target="_blank" rel="noopener"
+    >gremlin-google官方讨论这里</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">()</span>.has<span class="o">(</span><span class="s2">&#34;name&#34;</span>, <span class="s2">&#34;team A&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">sideEffect<span class="o">(</span>__.out<span class="o">(</span><span class="s2">&#34;owned&#34;</span><span class="o">)</span>.hasLabel<span class="o">(</span><span class="s2">&#34;player&#34;</span><span class="o">)</span>.aggregate<span class="o">(</span><span class="s2">&#34;my_player&#34;</span><span class="o">)</span>.limit<span class="o">(</span>1<span class="o">))</span>. // 本球队的球员
+</span></span><span class="line"><span class="cl">both<span class="o">(</span><span class="s2">&#34;is_friends_with&#34;</span><span class="o">)</span>.hasLabel<span class="o">(</span><span class="s2">&#34;team&#34;</span><span class="o">)</span>.as<span class="o">(</span><span class="s2">&#34;team2&#34;</span><span class="o">)</span>.out<span class="o">(</span><span class="s2">&#34;owned&#34;</span><span class="o">)</span>.hasLabel<span class="o">(</span><span class="s2">&#34;player&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">as<span class="o">(</span><span class="s2">&#34;friends_player&#34;</span><span class="o">)</span>.where<span class="o">(</span>without<span class="o">(</span><span class="s2">&#34;my_player&#34;</span><span class="o">))</span>.as<span class="o">(</span><span class="s2">&#34;friends_player2&#34;</span><span class="o">)</span>. //朋友球队球员
+</span></span><span class="line"><span class="cl"><span class="k">select</span><span class="o">(</span><span class="s2">&#34;team2&#34;</span>, <span class="s2">&#34;friends_player2&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">group<span class="o">()</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;friends_player2&#34;</span><span class="o">))</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;team2&#34;</span><span class="o">)</span>.fold<span class="o">())</span>. //按球员分组
+</span></span><span class="line"><span class="cl">unfold<span class="o">()</span>.project<span class="o">(</span><span class="s2">&#34;Player&#34;</span>, <span class="s2">&#34;Teams&#34;</span><span class="o">)</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span>keys<span class="o">)</span>.values<span class="o">(</span><span class="s2">&#34;name&#34;</span><span class="o">))</span>.
+</span></span><span class="line"><span class="cl">by<span class="o">(</span><span class="k">select</span><span class="o">(</span>values<span class="o">)</span>.unfold<span class="o">()</span>.values<span class="o">(</span><span class="s2">&#34;name&#34;</span><span class="o">)</span>.fold<span class="o">())</span> // 投影
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>Player:Baggio,Teams:<span class="o">[</span>Eagles<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>Player:Kroll,Teams:<span class="o">[</span>Valladolid<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>Player:Icardi,Teams:<span class="o">[</span>Valladolid<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>Player:Papin,Teams:<span class="o">[</span>Valladolid,Eagles<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="特殊需求类">特殊需求类</h3>
+<h4 id="路径按照点边聚合">路径按照点、边聚合</h4>
+<p>Gremlin输出正常的路径是将Vertex、Edge放在一个列表里，比如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span>1<span class="o">)</span>.repeat<span class="o">(</span>outE<span class="o">()</span>.otherV<span class="o">())</span>.times<span class="o">(</span>2<span class="o">)</span>.path<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>10<span class="o">][</span>4-created-&gt;5<span class="o">]</span>,v<span class="o">[</span>5<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果用户想把Vertex、Edge 分开输出再两个列表里, 该怎么办呢？</p>
+<p>由于Gremlin语法本身对Element缺少点、边判断的function进行描述，因此本质上是没法做的，但是如果用户知道点的label只有&quot;software&quot;,&ldquo;person&quot;这两类，则可以根据label来进行区分，可以这样写：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span>1<span class="o">)</span>.repeat<span class="o">(</span>outE<span class="o">()</span>.otherV<span class="o">())</span>.times<span class="o">(</span>2<span class="o">)</span>.path<span class="o">()</span>.
+</span></span><span class="line"><span class="cl">flatMap<span class="o">(</span>unfold<span class="o">()</span>.
+</span></span><span class="line"><span class="cl">group<span class="o">()</span>.by<span class="o">(</span>choose<span class="o">(</span>hasLabel<span class="o">(</span><span class="s2">&#34;software&#34;</span>, <span class="s2">&#34;person&#34;</span><span class="o">)</span>, __.constant<span class="o">(</span><span class="s2">&#34;vertex&#34;</span><span class="o">)</span>, __.constant<span class="o">(</span><span class="s2">&#34;edge&#34;</span><span class="o">))))</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>edge:<span class="o">[</span>e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,e<span class="o">[</span>10<span class="o">][</span>4-created-&gt;5<span class="o">]]</span>,vertex:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,v<span class="o">[</span>5<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>edge:<span class="o">[</span>e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]]</span>,vertex:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="所有路径按照点边聚合">所有路径按照点、边聚合</h4>
+<p>有时候用户期望把所有的路径中的点和边进行聚合，此时可以这样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># g.V(1).repeat(outE().otherV()).times(2).path().unfold().group().by(choose(hasLabel(&#34;software&#34;, &#34;person&#34;), __.constant(&#34;vertex&#34;), __.constant(&#34;edge&#34;))).unfold().project(&#34;k&#34;, &#34;v&#34;).by(select(keys)).by(select(values).dedup(local))</span>
+</span></span><span class="line"><span class="cl">g.V<span class="o">(</span>1<span class="o">)</span>.repeat<span class="o">(</span>outE<span class="o">()</span>.otherV<span class="o">())</span>.times<span class="o">(</span>2<span class="o">)</span>.path<span class="o">()</span>.unfold<span class="o">()</span>.
+</span></span><span class="line"><span class="cl">group<span class="o">()</span>.by<span class="o">(</span>choose<span class="o">(</span>hasLabel<span class="o">(</span><span class="s2">&#34;software&#34;</span>, <span class="s2">&#34;person&#34;</span><span class="o">)</span>, __.constant<span class="o">(</span><span class="s2">&#34;vertex&#34;</span><span class="o">)</span>, __.constant<span class="o">(</span><span class="s2">&#34;edge&#34;</span><span class="o">)))</span>.unfold<span class="o">()</span>.
+</span></span><span class="line"><span class="cl">project<span class="o">(</span><span class="s2">&#34;k&#34;</span>, <span class="s2">&#34;v&#34;</span><span class="o">)</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span>keys<span class="o">))</span>.by<span class="o">(</span><span class="k">select</span><span class="o">(</span>values<span class="o">)</span>.dedup<span class="o">(</span><span class="nb">local</span><span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>k:edge,v:<span class="o">[</span>e<span class="o">[</span>8<span class="o">][</span>1-knows-&gt;4<span class="o">]</span>,e<span class="o">[</span>10<span class="o">][</span>4-created-&gt;5<span class="o">]</span>,e<span class="o">[</span>11<span class="o">][</span>4-created-&gt;3<span class="o">]]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>k:vertex,v:<span class="o">[</span>v<span class="o">[</span>1<span class="o">]</span>,v<span class="o">[</span>4<span class="o">]</span>,v<span class="o">[</span>5<span class="o">]</span>,v<span class="o">[</span>3<span class="o">]]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="所有路径按点边聚合后返回所有的属性信息">所有路径按点、边聚合后，返回所有的属性信息</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span><span class="s1">&#39;1&#39;</span><span class="o">)</span>.repeat<span class="o">(</span>bothE<span class="o">(</span><span class="s1">&#39;knows&#39;</span>, <span class="s2">&#34;created&#34;</span><span class="o">)</span>.otherV<span class="o">()</span>.hasLabel<span class="o">(</span><span class="s1">&#39;person&#39;</span>, <span class="s2">&#34;software&#34;</span><span class="o">)</span>.simplePath<span class="o">())</span>.until<span class="o">(</span>__.hasId<span class="o">(</span><span class="s1">&#39;3&#39;</span><span class="o">)</span>.or<span class="o">()</span>.loops<span class="o">()</span>.is<span class="o">(</span>P.gte<span class="o">(</span>5<span class="o">)))</span>.hasId<span class="o">(</span><span class="s1">&#39;3&#39;</span><span class="o">)</span>.path<span class="o">()</span>.unfold<span class="o">()</span>.dedup<span class="o">()</span>.choose<span class="o">(</span>__.hasLabel<span class="o">(</span><span class="s2">&#34;person&#34;</span>, <span class="s2">&#34;software&#34;</span><span class="o">)</span>, __.valueMap<span class="o">(</span><span class="nb">true</span><span class="o">)</span>.aggregate<span class="o">(</span><span class="s2">&#34;vertex&#34;</span><span class="o">)</span>, __.project<span class="o">(</span><span class="s1">&#39;inV&#39;</span>, <span class="s1">&#39;outV&#39;</span>,<span class="s1">&#39;inVlabel&#39;</span>,<span class="s1">&#39;outVlabel&#39;</span>, <span class="s2">&#34;properteis&#34;</span><span class="o">)</span>.by<span class="o">(</span>inV<span class="o">()</span>.id<span class="o">())</span>.by<span class="o">(</span>outV<span class="o">()</span>.id<span class="o">())</span>.by<span class="o">(</span>inV<span class="o">()</span>.label<span class="o">())</span>.by<span class="o">(</span>outV<span class="o">()</span>.label<span class="o">())</span>.by<span class="o">(</span>valueMap<span class="o">(</span><span class="nb">true</span><span class="o">))</span>.aggregate<span class="o">(</span><span class="s2">&#34;edge&#34;</span><span class="o">))</span>.tail<span class="o">(</span>1<span class="o">)</span>.select<span class="o">(</span><span class="s2">&#34;vertex&#34;</span>, <span class="s2">&#34;edge&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">g.V<span class="o">(</span><span class="s1">&#39;1&#39;</span><span class="o">)</span>.repeat<span class="o">(</span>bothE<span class="o">(</span><span class="s1">&#39;knows&#39;</span>, <span class="s2">&#34;created&#34;</span><span class="o">)</span>.otherV<span class="o">()</span>.hasLabel<span class="o">(</span><span class="s1">&#39;person&#39;</span>, <span class="s2">&#34;software&#34;</span><span class="o">)</span>.simplePath<span class="o">())</span>.
+</span></span><span class="line"><span class="cl"><span class="k">until</span><span class="o">(</span>__.hasId<span class="o">(</span><span class="s1">&#39;3&#39;</span><span class="o">)</span>.or<span class="o">()</span>.loops<span class="o">()</span>.is<span class="o">(</span>P.gte<span class="o">(</span>5<span class="o">)))</span>.hasId<span class="o">(</span><span class="s1">&#39;3&#39;</span><span class="o">)</span>.path<span class="o">()</span>. // path
+</span></span><span class="line"><span class="cl">unfold<span class="o">()</span>.dedup<span class="o">()</span>.  //去重
+</span></span><span class="line"><span class="cl">choose<span class="o">(</span>__.hasLabel<span class="o">(</span><span class="s2">&#34;person&#34;</span>, <span class="s2">&#34;software&#34;</span><span class="o">)</span>,
+</span></span><span class="line"><span class="cl">__.valueMap<span class="o">(</span><span class="nb">true</span><span class="o">)</span>.aggregate<span class="o">(</span><span class="s2">&#34;vertex&#34;</span><span class="o">)</span>, // 点去重，返回所有属性
+</span></span><span class="line"><span class="cl">__.project<span class="o">(</span><span class="s1">&#39;inV&#39;</span>, <span class="s1">&#39;outV&#39;</span>,<span class="s1">&#39;inVlabel&#39;</span>,<span class="s1">&#39;outVlabel&#39;</span>, <span class="s2">&#34;properteis&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">by<span class="o">(</span>inV<span class="o">()</span>.id<span class="o">())</span>.by<span class="o">(</span>outV<span class="o">()</span>.id<span class="o">())</span>.by<span class="o">(</span>inV<span class="o">()</span>.label<span class="o">())</span>.by<span class="o">(</span>outV<span class="o">()</span>.label<span class="o">())</span>.
+</span></span><span class="line"><span class="cl">by<span class="o">(</span>valueMap<span class="o">(</span><span class="nb">true</span><span class="o">))</span>.aggregate<span class="o">(</span><span class="s2">&#34;edge&#34;</span><span class="o">))</span>. //边去重，返回所有属性并且包含in，outv信息
+</span></span><span class="line"><span class="cl">tail<span class="o">(</span>1<span class="o">)</span>.
+</span></span><span class="line"><span class="cl"><span class="k">select</span><span class="o">(</span><span class="s2">&#34;vertex&#34;</span>, <span class="s2">&#34;edge&#34;</span><span class="o">)</span> 聚合输出
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>vertex:<span class="o">[</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>id:1,label:person,name:<span class="o">[</span>marko<span class="o">]</span>,age:<span class="o">[</span>29<span class="o">]]</span>,
+</span></span><span class="line"><span class="cl"><span class="o">[</span>id:3,label:software,name:<span class="o">[</span>lop<span class="o">]</span>,lang:<span class="o">[</span>java<span class="o">]]</span>,
+</span></span><span class="line"><span class="cl"><span class="o">[</span>id:4,label:person,name:<span class="o">[</span>josh<span class="o">]</span>,age:<span class="o">[</span>32<span class="o">]]</span>
+</span></span><span class="line"><span class="cl"><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">edge:<span class="o">[</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>inV:3,outV:1,inVlabel:software,outVlabel:person,properteis:<span class="o">[</span>id:9,label:created,weight:0.4<span class="o">]]</span>,
+</span></span><span class="line"><span class="cl"><span class="o">[</span>inV:4,outV:1,inVlabel:person,outVlabel:person,properteis:<span class="o">[</span>id:8,label:knows,weight:1.0<span class="o">]]</span>,
+</span></span><span class="line"><span class="cl"><span class="o">[</span>inV:3,outV:4,inVlabel:software,outVlabel:person,properteis:<span class="o">[</span>id:11,label:created,weight:0.4<span class="o">]]]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="类型转换">类型转换</h4>
+<p>Gremlin对算子执行算数运算的约束比较死板，如果两个值类型不一致，直接报错。也没有像cypher提供类型转换的函数，但是由于兼容groovy语法，可以利用groovy来进行转换（GDB禁止掉了该语法），比如。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.withSack<span class="o">(</span>2<span class="o">)</span>.V<span class="o">(</span>1<span class="o">)</span>.sack<span class="o">(</span>mult<span class="o">)</span>.by<span class="o">(</span>values<span class="o">(</span><span class="s2">&#34;x&#34;</span><span class="o">)</span>.map<span class="o">{(</span><span class="s1">&#39;&#39;</span>+it<span class="o">)</span>.toInteger<span class="o">()})</span>.sack<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="nv">429</span> <span class="o">==</span>&gt;4
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="批量更新">批量更新</h3>
+<h4 id="批量属性插入">批量属性插入</h4>
+<p>属性插入有两种写入，常规的比如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.V<span class="o">(</span>1<span class="o">)</span>.property<span class="o">(</span><span class="s2">&#34;k1&#34;</span>, <span class="s2">&#34;v1&#34;</span><span class="o">)</span>.property<span class="o">(</span><span class="s2">&#34;k2&#34;</span>, <span class="s1">&#39;v2&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;v<span class="o">[</span>1<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面的写法需要把kx，vx分别用property包装起来，除非用脚本生成，一般而言可扩展性比较差，其实可以把properties作为参数，并通过step进行循环插入，比如。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gremlin&gt; g.inject<span class="o">([[</span><span class="s1">&#39;code&#39;</span>:<span class="s1">&#39;L10&#39;</span>, <span class="s1">&#39;description&#39;</span>:<span class="s1">&#39;Some other area&#39;</span><span class="o">]])</span>.unfold<span class="o">()</span>.as<span class="o">(</span><span class="s1">&#39;properties&#39;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">V<span class="o">(</span>1<span class="o">)</span>.as<span class="o">(</span><span class="s1">&#39;vertex&#39;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">sideEffect<span class="o">(</span>__.select<span class="o">(</span><span class="s1">&#39;properties&#39;</span><span class="o">)</span>.unfold<span class="o">()</span>.as<span class="o">(</span><span class="s1">&#39;kv&#39;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl"><span class="k">select</span><span class="o">(</span><span class="s1">&#39;vertex&#39;</span><span class="o">)</span>.property<span class="o">(</span>__.select<span class="o">(</span><span class="s1">&#39;kv&#39;</span><span class="o">)</span>.by<span class="o">(</span>Column.keys<span class="o">)</span>,__.select<span class="o">(</span><span class="s1">&#39;kv&#39;</span><span class="o">)</span>.by<span class="o">(</span>Column.values<span class="o">)))</span>.
+</span></span><span class="line"><span class="cl">valueMap<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt;<span class="o">[</span>code:<span class="o">[</span>L10<span class="o">]</span>,k1:<span class="o">[</span>v1<span class="o">]</span>,k2:<span class="o">[</span>v2<span class="o">]</span>,name:<span class="o">[</span>marko<span class="o">]</span>,description:<span class="o">[</span>Some other area<span class="o">]</span>,age:<span class="o">[</span>29<span class="o">]]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="批量插入点插入边">批量插入点、插入边</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">g.addV<span class="o">(</span><span class="s2">&#34;vertex&#34;</span><span class="o">)</span>.property<span class="o">(</span>id,124<span class="o">)</span>.as<span class="o">(</span><span class="s2">&#34;start&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">addV<span class="o">(</span><span class="s2">&#34;vertex&#34;</span><span class="o">)</span>.property<span class="o">(</span>id,125<span class="o">)</span>.as<span class="o">(</span><span class="s2">&#34;end&#34;</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">sideEffect<span class="o">(</span>addE<span class="o">(</span><span class="s2">&#34;end&#34;</span><span class="o">)</span>.from<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;start&#34;</span><span class="o">))</span>.to<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;end&#34;</span><span class="o">)))</span>.
+</span></span><span class="line"><span class="cl">sideEffect<span class="o">(</span>addE<span class="o">(</span><span class="s2">&#34;end2&#34;</span><span class="o">)</span>.from<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;start&#34;</span><span class="o">))</span>.to<span class="o">(</span><span class="k">select</span><span class="o">(</span><span class="s2">&#34;end&#34;</span><span class="o">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="存在就更新不存在插入">存在就更新，不存在插入</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## 点</span>
+</span></span><span class="line"><span class="cl">g.inject<span class="o">(</span><span class="s1">&#39;a&#39;</span><span class="o">)</span>.choose<span class="o">(</span>__.V<span class="o">(</span>11<span class="o">)</span>,__.V<span class="o">(</span>11<span class="o">)</span>.property<span class="o">(</span><span class="s1">&#39;a&#39;</span>,<span class="s1">&#39;c&#39;</span><span class="o">)</span>,__.addV<span class="o">(</span><span class="s2">&#34;11&#34;</span><span class="o">)</span>.property<span class="o">(</span>id,11<span class="o">)</span>.property<span class="o">(</span><span class="s1">&#39;a&#39;</span>,<span class="s1">&#39;b&#39;</span><span class="o">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 边</span>
+</span></span><span class="line"><span class="cl">g.inject<span class="o">(</span><span class="s2">&#34;Any&#34;</span><span class="o">)</span>.coalesce<span class="o">(</span>g.E<span class="o">(</span>EID<span class="o">)</span>, addE<span class="o">(</span><span class="s2">&#34;follow&#34;</span><span class="o">)</span>.from<span class="o">(</span>V<span class="o">(</span>VID1<span class="o">))</span>.to<span class="o">(</span>V<span class="o">(</span>VID2<span class="o">))</span>.property<span class="o">(</span>id, EID<span class="o">))</span>.
+</span></span><span class="line"><span class="cl">property<span class="o">(</span><span class="s2">&#34;P1&#34;</span>, V1<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">property<span class="o">(</span><span class="s2">&#34;P2&#34;</span>, V2<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">property<span class="o">(</span><span class="s2">&#34;P3&#34;</span>, V3<span class="o">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以上复杂场景实战内容转载于<a class="link" href="https://zhuanlan.zhihu.com/p/453293072"  target="_blank" rel="noopener"
+    >用Gremlin探索万物-实用小技巧</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a>
+        
+            <a href="/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93/">图数据库</a>
+        
+            <a href="/tags/gdb/">GDB</a>
+        
+            <a href="/tags/gremlin/">Gremlin</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 Staparx
+    </section>
+    
+    <section class="powerby">
+        
+            域名号预留 <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.16.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
